@@ -33,39 +33,39 @@ public class AddProductController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) 
     {
-        productIDField.setText("Auto Gen - Disabled");
-        productIDField.setDisable(true);
+        productIdBox.setText("Auto Gen - Disabled");
+        productIdBox.setDisable(true);
         addPartPartIDColumn.setCellValueFactory(new PropertyValueFactory<Part,Integer>("partID"));
         addPartNameColumn.setCellValueFactory(new PropertyValueFactory<Part,String>("name"));
         addPartInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part,Integer>("inStock"));
         addPartPriceColumn.setCellValueFactory(new PropertyValueFactory<Part,Double>("price"));
         
-        partsContainedPartIDColumn.setCellValueFactory(new PropertyValueFactory<Part,Integer>("partID"));
-        partsContainedPartNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
-        partsContainedInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("inStock"));
-        partsContainedPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("price"));
+        currentProductPartsContainedPartIDColumn.setCellValueFactory(new PropertyValueFactory<Part,Integer>("partID"));
+        currentProductPartsContainedPartNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
+        currentProductPartsContainedInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("inStock"));
+        currentProductPartsContainedPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("price"));
 
         populateAvailablePartsTable();
         populateCurrentPartsTable();
     } 
 
     @FXML
-    private TextField productIDField;
+    private TextField productIdBox;
 
     @FXML
-    private TextField productNameField;
+    private TextField productNameBox;
 
     @FXML
-    private TextField productInventoryField;
+    private TextField productInventoryBox;
 
     @FXML
-    private TextField productPriceField;
+    private TextField productPriceBox;
 
     @FXML
-    private TextField productMinField;
+    private TextField productMinBox;
 
     @FXML
-    private TextField productMaxField;
+    private TextField productMaxBox;
 
     @FXML
     private TableView<Part> addPartTable;
@@ -83,38 +83,38 @@ public class AddProductController implements Initializable
     private TableColumn<Part, Double> addPartPriceColumn;
 
     @FXML
-    private TableView<Part> partsContainedTable;
+    private TableView<Part> currentProductPartsContainedTable;
 
     @FXML
-    private TableColumn<Part, Integer> partsContainedPartIDColumn;
+    private TableColumn<Part, Integer> currentProductPartsContainedPartIDColumn;
 
     @FXML
-    private TableColumn<Part, String> partsContainedPartNameColumn;
+    private TableColumn<Part, String> currentProductPartsContainedPartNameColumn;
 
     @FXML
-    private TableColumn<Part, Integer> partsContainedInventoryColumn;
+    private TableColumn<Part, Integer> currentProductPartsContainedInventoryColumn;
 
     @FXML
-    private TableColumn<Part, Double> partsContainedPriceColumn;
+    private TableColumn<Part, Double> currentProductPartsContainedPriceColumn;
 
     @FXML
-    private TextField searchPartsField;
+    private TextField searchPartsBox;
     
     private final ObservableList<Part> productParts = FXCollections.observableArrayList();
     
-    public AddProductController() {
+    public void populateAvailablePartsTable() 
+    {
+         addPartTable.setItems(Model.Inventory.getPartInventory());
     }
     
-    public void populateAvailablePartsTable() {
-    addPartTable.setItems(Model.Inventory.getPartInventory());
-    }
-    
-    public void populateCurrentPartsTable() {
-    partsContainedTable.setItems(productParts);
+    public void populateCurrentPartsTable() 
+    {
+    currentProductPartsContainedTable.setItems(productParts);
     }
     
     @FXML
-    void addPartToProductHandler(ActionEvent event) throws IOException {
+    void addPartToProductHandler(ActionEvent event) throws IOException 
+    {
         Part part = addPartTable.getSelectionModel().getSelectedItem();
         productParts.add(part);
         populateCurrentPartsTable();
@@ -125,9 +125,9 @@ public class AddProductController implements Initializable
     void cancelProductHandler(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Cancel Adding Product");
-        alert.setHeaderText("Please confirm cancelling Adding product.");
-        alert.setContentText("Please confirm you want to cancel adding " + productNameField.getText() + ".");
+        alert.setTitle("CANCEL PRODUCT ADD");
+        alert.setHeaderText("Please confirm");
+        alert.setContentText("Are you sure you want to cancel adding " + productNameBox.getText() + "?");
         Optional<ButtonType> result = alert.showAndWait();
         
         if (result.get() == ButtonType.OK) {
@@ -143,46 +143,20 @@ public class AddProductController implements Initializable
     @FXML
     void deletePartFromProductHandler(ActionEvent event) throws IOException 
     {
-        Part part = partsContainedTable.getSelectionModel().getSelectedItem();
+        Part part = currentProductPartsContainedTable.getSelectionModel().getSelectedItem();
         productParts.remove(part);
-
-//        if (productParts.size() > 1) {
-//            Part part = partsContainedTable.getSelectionModel().getSelectedItem();
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.initModality(Modality.NONE);
-//            alert.setTitle("Part Removal");
-//            alert.setHeaderText("Please confirm removal of part from product.");
-//            alert.setContentText("Are you sure you want to remove " + part.getName() + "?");
-//            Optional<ButtonType> result = alert.showAndWait();
-//            
-//            if (result.get() == ButtonType.OK) {
-//                productParts.remove(part);
-//            }          
-//        }
-//        
-//        else {
-//            Part part = partsContainedTable.getSelectionModel().getSelectedItem();            
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Error deleting part!");
-//            alert.setHeaderText("Products require a minimum of one part.");
-//            alert.setContentText("All products must have a minimum of one part. Removing this part will delete the product entirely.  Would you like to proceed?");
-//            Optional<ButtonType> result = alert.showAndWait();
-//            
-//            if (result.get() == ButtonType.OK) {
-//                productParts.remove(part);
-//            }      
-//        }
     }
 
     @FXML
     void saveProductHandler(ActionEvent event) throws IOException, ValidationException {
-        String productName = productNameField.getText();
-        String productInventory = productInventoryField.getText();
-        String productPrice = productPriceField.getText();
-        String productMin = productMinField.getText();
-        String productMax = productMaxField.getText();
+        String productName = productNameBox.getText();
+        String productInventory = productInventoryBox.getText();
+        String productPrice = productPriceBox.getText();
+        String productMin = productMinBox.getText();
+        String productMax = productMaxBox.getText();
        
-         if ("".equals(productInventory)) {
+        if ("".equals(productInventory)) 
+        {
             productInventory = "0";
         }
         
@@ -201,8 +175,9 @@ public class AddProductController implements Initializable
         newProduct.setMin(Integer.parseInt(productMin));
         newProduct.setMax(Integer.parseInt(productMax));
    
-        for (Part i: productParts) 
+        productParts.forEach((i) -> { 
             newProduct.addAssociatedParts(i);
+        });
          
         try {
             newProduct.isValid();
@@ -218,7 +193,7 @@ public class AddProductController implements Initializable
         }
             catch (ValidationException i) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error Validating Product");
+                alert.setTitle("ERROR!");
                 alert.setHeaderText("Product not valid");
                 alert.setContentText(i.getMessage());
                 alert.showAndWait();
@@ -228,7 +203,7 @@ public class AddProductController implements Initializable
        
     @FXML
     void searchPartsButtonHandler (ActionEvent event) throws IOException {
-        String partsSearchIDString = searchPartsField.getText();
+        String partsSearchIDString = searchPartsBox.getText();
         Part searchedPart = Inventory.lookupPart(Integer.parseInt(partsSearchIDString));
         
         if (searchedPart != null) {
@@ -238,9 +213,9 @@ public class AddProductController implements Initializable
         }
         else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error Searching");
+            alert.setTitle("SEARCH ERROR");
             alert.setHeaderText("Part not found in inventory.");
-            alert.setContentText("The part searched for does not match any current part in Inventory!");
+            alert.setContentText("The part searched for does not match any current part in the Inventory!");
             alert.showAndWait();
         }
     }

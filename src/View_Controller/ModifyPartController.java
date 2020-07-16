@@ -31,57 +31,59 @@ public class ModifyPartController implements Initializable
     public void initialize(URL location, ResourceBundle resources) 
     {
 
-        partIdField.setDisable(true);
-        partIdField.setText(Integer.toString(modifyPart.getPartId()));
-        partNameField.setText(modifyPart.getName());
-        partInventoryField.setText(Integer.toString(modifyPart.getInStock()));
-        partPriceField.setText(Double.toString(modifyPart.getPrice()));
-        partMinField.setText(Integer.toString(modifyPart.getMin()));
-        partMaxField.setText(Integer.toString(modifyPart.getMax()));
+        partIdBox.setDisable(true);
+        partIdBox.setText(Integer.toString(modifyPart.getPartId()));
+        partNameBox.setText(modifyPart.getName());
+        partInventoryBox.setText(Integer.toString(modifyPart.getInStock()));
+        partPriceBox.setText(Double.toString(modifyPart.getPrice()));
+        partMinBox.setText(Integer.toString(modifyPart.getMin()));
+        partMaxBox.setText(Integer.toString(modifyPart.getMax()));
 
-      if (modifyPart instanceof Inhouse) {
-            partSourceField.setText(Integer.toString(((Inhouse) modifyPart).getMachineId()));
+        if (modifyPart instanceof Inhouse) 
+        {
+            partSourceBox.setText(Integer.toString(((Inhouse) modifyPart).getMachineId()));
 
-            partSourceFieldLabel.setText("Machine ID");
-            inhousePartSelect.setSelected(true);
+            partSourceBoxLabel.setText("Machine ID");
+            inHousePartSelect.setSelected(true);
 
-        } else {
-            partSourceField.setText(((Outsourced) modifyPart).getCompanyName());
-            partSourceFieldLabel.setText("Company Name");
+        }
+        else 
+        {
+            partSourceBox.setText(((Outsourced) modifyPart).getCompanyName());
+            partSourceBoxLabel.setText("Company Name");
             outsourcedPartSelect.setSelected(true);
-
         }
     }    
 
     @FXML
-    private RadioButton inhousePartSelect;
+    private RadioButton inHousePartSelect;
 
     @FXML
     private RadioButton outsourcedPartSelect;
 
     @FXML
-    private Label partSourceFieldLabel;
+    private Label partSourceBoxLabel;
 
     @FXML
-    private TextField partIdField;
+    private TextField partIdBox;
 
     @FXML
-    private TextField partNameField;
+    private TextField partNameBox;
 
     @FXML
-    private TextField partInventoryField;
+    private TextField partInventoryBox;
 
     @FXML
-    private TextField partPriceField;
+    private TextField partPriceBox;
 
     @FXML
-    private TextField partMinField;
+    private TextField partMinBox;
 
     @FXML
-    private TextField partMaxField;
+    private TextField partMaxBox;
 
     @FXML
-    private TextField partSourceField;
+    private TextField partSourceBox;
 
     private boolean isInHouse;   
     
@@ -91,33 +93,27 @@ public class ModifyPartController implements Initializable
     {
       this.modifyPart = getModifyPart();
     }
-
     
     @FXML
-    void inhousePartSelectHandler(ActionEvent event) 
+    void inHousePartSelectHandler(ActionEvent event) 
     {
         isInHouse = true;
-        partSourceFieldLabel.setText("Machine ID");
+        partSourceBoxLabel.setText("Machine ID");
     }
     
     @FXML
     void outsourcedPartSelectHandler(ActionEvent event) {
         isInHouse = false;
-        partSourceFieldLabel.setText("Company Name");
+        partSourceBoxLabel.setText("Company Name");
    }
-
-    @FXML
-    void partCancel(ActionEvent event) throws IOException{
-
-    }
 
     @FXML
     void partCancelHandler(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Cancel Modifcation of Part");
+        alert.setTitle("Cancel Part Modification");
         alert.setHeaderText("Confirm cancellation");
-        alert.setContentText("Please confirm that you want to cancel modifying part " + partNameField.getText() + "?");
+        alert.setContentText("Please confirm that you want to cancel modifying part " + partNameBox.getText() + "?");
         Optional<ButtonType> result = alert.showAndWait();
         
         if (result.get() == ButtonType.OK) {
@@ -132,13 +128,13 @@ public class ModifyPartController implements Initializable
   
     @FXML
     void modPartSaveHandler(ActionEvent event) throws IOException {
-        String partID    = partIdField.getText();
-        String partName  = partNameField.getText();
-        String partInv   = partInventoryField.getText();
-        String partPrice = partPriceField.getText();
-        String partMin   = partMinField.getText();
-        String partMax   = partMaxField.getText();
-        String partFlex  = partSourceField.getText();
+        String partID    = partIdBox.getText();
+        String partName  = partNameBox.getText();
+        String partInv   = partInventoryBox.getText();
+        String partPrice = partPriceBox.getText();
+        String partMin   = partMinBox.getText();
+        String partMax   = partMaxBox.getText();
+        String partFlex  = partSourceBox.getText();
         
         if ("".equals(partInv)) {
             partInv = "0";
@@ -169,7 +165,7 @@ public class ModifyPartController implements Initializable
                
             } catch (ValidationException exception) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error Validating Part!");
+                alert.setTitle("Error!");
                 alert.setHeaderText("Part not valid");
                 alert.setContentText(exception.getMessage());
                 alert.showAndWait();
@@ -200,7 +196,7 @@ public class ModifyPartController implements Initializable
              
            } catch (ValidationException exception) {
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-               alert.setTitle("Error Validating Part!");
+               alert.setTitle("Error!");
                alert.setHeaderText("Part not valid");
                alert.setContentText(exception.getMessage());
                alert.showAndWait();

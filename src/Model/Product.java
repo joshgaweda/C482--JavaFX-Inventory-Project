@@ -104,9 +104,9 @@ public class Product
     
     public Part lookupAssociatedParts(int partID) 
     {
-        for (Part a: associatedParts) {
-            if (a.getPartId() == partID) {
-                return a;
+        for (Part i: associatedParts) {
+            if (i.getPartId() == partID) {
+                return i;
             }
         }
             return null;
@@ -119,9 +119,9 @@ public class Product
     
     public boolean deleteAssociatedParts(int partID) 
     {
-        for (Part b: associatedParts) {
-            if (b.getPartId() == partID) {
-                associatedParts.remove(b);
+        for (Part i: associatedParts) {
+            if (i.getPartId() == partID) {
+                associatedParts.remove(i);
                 return true;
             }
         }
@@ -133,37 +133,44 @@ public class Product
         
         double totalPriceOfParts = 0.00;
         
-        for(Part p : getAllAssociatedParts()) 
+        for(Part i : getAllAssociatedParts()) 
         {
-            totalPriceOfParts += p.getPrice();
+            totalPriceOfParts += i.getPrice();
         }
         
-        if (totalPriceOfParts > getProductPrice()) {
-            throw new ValidationException("Product price must be greater than total combined cost of all parts assigned to the product. Please validate prices.");
+        if (getProductPrice() < 0) 
+        {
+            throw new ValidationException("Please enter a valid price. Price must be greater than $0.");
+        }        
+        
+        if (totalPriceOfParts > getProductPrice()) 
+        {
+            throw new ValidationException("Product price must be greater than total cost of all parts assigned to the product.");
         }
         
-        if (getProductName().equals("")) {
-            throw new ValidationException("The name field is required. Please enter a product name."); 
+        if (getProductName().equals("")) 
+        {
+            throw new ValidationException("Product name is required."); 
         }
         
-        if (getStock() < 0) {
-            throw new ValidationException("Inventory must be greater than 0. Please enter a valid amount.");
+        if (getStock() < 0) 
+        {
+            throw new ValidationException("Please enter a valid amount. Inventory must be greater than 0.");
         }
         
-        if (getProductPrice() < 0) {
-            throw new ValidationException("Price must be greater than $0. Please enter a valid price.");
+        if (getStock() < getMin() || getStock() > getMax()) 
+        {
+            throw new ValidationException("Current inventory must be between the minimum and maximum inventory level.");
+        }        
+        
+        if (getMin() < 0)
+        {
+            throw new ValidationException("Please enter a valid amount. Minimum inventory must be greater than zero.");
         }
         
-        if (getMin() < 0) {
-            throw new ValidationException("Minimum inventory must be greater than zero. Please enter a valid amount.");
-        }
-        
-        if (getMin() > getMax()) {
-            throw new ValidationException("Minimum inventory cannot exceed maximum. Please enter a valid minimum inventory level.");
-        }
-        
-        if (getStock() < getMin() || getStock() > getMax()) {
-            throw new ValidationException("Current inventory must be between the minimum and maximum inventory level. Please enter a valid inventory between those values.");
+        if (getMin() > getMax()) 
+        {
+            throw new ValidationException("Please enter a valid minimum inventory level. Minimum inventory cannot exceed maximum.");
         }
          
         return true;   

@@ -84,27 +84,27 @@ public abstract class Part
     public boolean isValid() throws ValidationException {
      
         if (getName().equals("")) {
-            throw new ValidationException("The name field is required. Please enter a name."); 
+            throw new ValidationException("A name is required. Please enter a name."); 
         }
         
         if (getInStock() < 0) {
-            throw new ValidationException("Inventory must be greater than 0. Please enter a valid amount.");
+            throw new ValidationException("Please enter a valid amount. Inventory must be greater than 0.");
         }        
         
         if (getPrice() < 0) {
-            throw new ValidationException("Price must be greater than $0. Please enter a valid price.");
+            throw new ValidationException("Please enter a valid price. Price must be greater than $0.");
         }
         
         if (getMin() < 0) {
-            throw new ValidationException("Minimum inventory must be greater than zero. Please enter a valid amount.");
+            throw new ValidationException("Please enter a valid amount. Minimum inventory must be greater than zero.");
         }
         
         if (getMin() > getMax()) {
-            throw new ValidationException("Minimum inventory cannot exceed maximum. Please enter a valid minimum inventory level.");
+            throw new ValidationException("Please enter a valid minimum inventory level. Minimum inventory cannot exceed maximum.");
         }
         
         if (getInStock() < getMin() || getInStock() > getMax()) {
-            throw new ValidationException("Current inventory must be between the minimum and maximum inventory level. Please enter a valid inventory between those values.");
+            throw new ValidationException("Please enter a valid inventory between those values. Current inventory must be between the minimum and maximum inventory level.");
         }
       return true;  
     }    
