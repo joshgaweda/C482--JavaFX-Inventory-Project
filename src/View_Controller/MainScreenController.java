@@ -100,7 +100,7 @@ public class MainScreenController implements Initializable
     }
     
       @FXML
-    void PartModMainHandler(ActionEvent event) throws IOException  {
+    void partModMainHandler(ActionEvent event) throws IOException  {
         openModifyPartWindow(event);
     }
 
