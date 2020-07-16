@@ -9,12 +9,10 @@ import static Model.Inventory.canDeleteProduct;
 import static Model.Inventory.deletePart;
 import static Model.Inventory.deleteProduct;
 import static Model.Inventory.getPartInventory;
-
 import java.io.IOException;
 import java.util.Optional;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -42,6 +40,8 @@ public class MainScreenController implements Initializable
     { 
         setModifyPart(null);
         setModifiedProduct(null);
+        refreshPartsTable();
+        refreshProductsTable();  
         
         mainPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
         mainPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -51,10 +51,7 @@ public class MainScreenController implements Initializable
         mainProductIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getProductId()).asObject());
         mainProductNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProductName()));
         mainProductInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
-        mainProductPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getProductPrice()).asObject());
-        
-        refreshPartsTable();
-        refreshProductsTable();   
+        mainProductPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getProductPrice()).asObject()); 
     }        
     
     @FXML
@@ -109,17 +106,18 @@ public class MainScreenController implements Initializable
 
     @FXML
     void addProductMainHandler(ActionEvent event) throws IOException  {
-        openAddProductScreen(event);
+        openAddProductWindow(event);
     }
     
     @FXML
-    void deletePartHandler(ActionEvent event) throws IOException  {
+    void deletePartHandler(ActionEvent event) throws IOException  
+    {
         Part part = mainPartsTable.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Delete Part");
-        alert.setHeaderText("Please Confirm Deletion");
+        alert.setTitle("DELETE PART");
+        alert.setHeaderText("Please Confirm");
         alert.setContentText("Are you sure you want to delete " + part.getName() + "?");
         Optional<ButtonType> result = alert.showAndWait();
 
@@ -136,9 +134,9 @@ public class MainScreenController implements Initializable
         if (!canDeleteProduct(product)) 
         {
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("ERROR IN DELETING PRODUCT");
+            alert.setTitle("ERROR DELETING PRODUCT");
             alert.setHeaderText("This product cannot be removed");
-            alert.setContentText("This product has associated parts. Please disassociate those parts or delete those parts, then try again.");
+            alert.setContentText("This product has parts associated with it. Please disassociate those parts and then try again.");
             alert.showAndWait();
         }
         else 
@@ -163,7 +161,7 @@ public class MainScreenController implements Initializable
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Exiting Confirmation");
+        alert.setTitle("EXIT CONFIRMATION");
         alert.setHeaderText("Please confirm that you want to exit!");
         alert.setContentText("Are you sure you want to exit?");
         Optional<ButtonType> result = alert.showAndWait();
@@ -187,7 +185,7 @@ public class MainScreenController implements Initializable
     {
         currentModProduct = mainProductTable.getSelectionModel().getSelectedItem();
         setModifiedProduct(currentModProduct);
-        openModifyProductScreen(event);
+        openModifyProductWindow(event);
             
     }
 
@@ -229,14 +227,14 @@ public class MainScreenController implements Initializable
         else
         {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                   alert.setTitle("You have not selected a Part to Modify.");
+                   alert.setTitle("NO PART SELECTED");
                    alert.setHeaderText("Please select a Part to Modify");
-                   alert.setContentText("Please click okay to return to main screen.");
+                   alert.setContentText("Click okay to return to main window.");
                    alert.showAndWait();
         }  
     }
     
-    public void openAddProductScreen(ActionEvent event) throws IOException 
+    public void openAddProductWindow(ActionEvent event) throws IOException 
     {
         Parent loader = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
         Scene scene = new Scene(loader);
@@ -245,7 +243,7 @@ public class MainScreenController implements Initializable
         window.show();
     }
      
-    public void openModifyProductScreen(ActionEvent event) throws IOException 
+    public void openModifyProductWindow(ActionEvent event) throws IOException 
     {
          if (currentModProduct != null)
          {
@@ -258,9 +256,9 @@ public class MainScreenController implements Initializable
           else    
           {
               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                     alert.setTitle("You have not selected a Product to Modify.");
+                     alert.setTitle("No product selected");
                      alert.setHeaderText("Please select a Product to Modify");
-                     alert.setContentText("Please click okay to return to main screen.");
+                     alert.setContentText("Click okay to return to main window.");
                      alert.showAndWait();
           }  
      }
