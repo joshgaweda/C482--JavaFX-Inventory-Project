@@ -122,7 +122,8 @@ public class AddProductController implements Initializable
     
 
     @FXML
-    void cancelProductHandler(ActionEvent event) throws IOException {
+    void cancelProductHandler(ActionEvent event) throws IOException 
+    {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("CANCEL PRODUCT ADD");
@@ -148,7 +149,8 @@ public class AddProductController implements Initializable
     }
 
     @FXML
-    void saveProductHandler(ActionEvent event) throws IOException, ValidationException {
+    void saveProductHandler(ActionEvent event) throws IOException, ValidationException 
+    {
         String productName = productNameBox.getText();
         String productInventory = productInventoryBox.getText();
         String productPrice = productPriceBox.getText();
@@ -161,7 +163,8 @@ public class AddProductController implements Initializable
         }
         
         int newProductID = 1;
-        for(Product i: Model.Inventory.getAllProducts()) {
+        for(Product i: Model.Inventory.getAllProducts()) 
+        {
             if (i.getProductId() >= newProductID) {
                 newProductID = i.getProductId() + 1;
             }
@@ -198,11 +201,12 @@ public class AddProductController implements Initializable
                 alert.setContentText(i.getMessage());
                 alert.showAndWait();
                     }   
-                    }
+    }
 
        
     @FXML
-    void searchPartsButtonHandler (ActionEvent event) throws IOException {
+    void searchPartsButtonHandler (ActionEvent event) throws IOException 
+    {
         String partsSearchIDString = searchPartsBox.getText();
         Part searchedPart = Inventory.lookupPart(Integer.parseInt(partsSearchIDString));
         

@@ -108,7 +108,8 @@ public class ModifyPartController implements Initializable
    }
 
     @FXML
-    void partCancelHandler(ActionEvent event) throws IOException {
+    void partCancelHandler(ActionEvent event) throws IOException 
+    {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("Cancel Part Modification");
@@ -127,7 +128,8 @@ public class ModifyPartController implements Initializable
     }
   
     @FXML
-    void PartModSaveHandler(ActionEvent event) throws IOException {
+    void PartModSaveHandler(ActionEvent event) throws IOException 
+    {
         String partID    = partIdBox.getText();
         String partName  = partNameBox.getText();
         String partInv   = partInventoryBox.getText();
@@ -136,72 +138,75 @@ public class ModifyPartController implements Initializable
         String partMax   = partMaxBox.getText();
         String partFlex  = partSourceBox.getText();
         
-        if ("".equals(partInv)) {
+        if ("".equals(partInv)) 
+        {
             partInv = "0";
         }
         
-           if (isInHouse) {
-           Inhouse modifyPart = new Inhouse();
-           modifyPart.setPartId(Integer.parseInt(partID));
-           modifyPart.setName(partName);
-           modifyPart.setPrice(Double.parseDouble(partPrice));
-           modifyPart.setInStock(Integer.parseInt(partInv));
-           modifyPart.setMin(Integer.parseInt(partMin));
-           modifyPart.setMax(Integer.parseInt(partMax));
-           modifyPart.setMachineId(Integer.parseInt(partFlex));
+           if (isInHouse) 
+           {
+                Inhouse modifyPart = new Inhouse();
+                modifyPart.setPartId(Integer.parseInt(partID));
+                modifyPart.setName(partName);
+                modifyPart.setPrice(Double.parseDouble(partPrice));
+                modifyPart.setInStock(Integer.parseInt(partInv));
+                modifyPart.setMin(Integer.parseInt(partMin));
+                modifyPart.setMax(Integer.parseInt(partMax));
+                modifyPart.setMachineId(Integer.parseInt(partFlex));
 
-           try {
-               modifyPart.isValid();
-               
-               if (modifyPart.isValid() == true) {
-                    Inventory.updatePart(modifyPart);                 
-               }
-             
-                  Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-            Scene scene = new Scene(loader);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-               
-            } catch (ValidationException exception) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error!");
-                alert.setHeaderText("Part not valid");
-                alert.setContentText(exception.getMessage());
-                alert.showAndWait();
-                }  
+                try {
+                    modifyPart.isValid();
+
+                    if (modifyPart.isValid() == true) {
+                         Inventory.updatePart(modifyPart);                 
+                    }
+
+                       Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+                 Scene scene = new Scene(loader);
+                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                 window.setScene(scene);
+                 window.show();
+
+                 } catch (ValidationException exception) {
+                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                     alert.setTitle("Error!");
+                     alert.setHeaderText("Part not valid");
+                     alert.setContentText(exception.getMessage());
+                     alert.showAndWait();
+                     }  
             } 
-        else {
-           Outsourced modifyPart = new Outsourced();
-           modifyPart.setPartId(Integer.parseInt(partID));
-           modifyPart.setName(partName);
-           modifyPart.setPrice(Double.parseDouble(partPrice));
-           modifyPart.setInStock(Integer.parseInt(partInv));
-           modifyPart.setMin(Integer.parseInt(partMin));
-           modifyPart.setMax(Integer.parseInt(partMax));
-           modifyPart.setCompanyName(partFlex);
+            else 
+           {
+               Outsourced modifyPart = new Outsourced();
+               modifyPart.setPartId(Integer.parseInt(partID));
+               modifyPart.setName(partName);
+               modifyPart.setPrice(Double.parseDouble(partPrice));
+               modifyPart.setInStock(Integer.parseInt(partInv));
+               modifyPart.setMin(Integer.parseInt(partMin));
+               modifyPart.setMax(Integer.parseInt(partMax));
+               modifyPart.setCompanyName(partFlex);
 
-           try {
-               modifyPart.isValid();
-               if (modifyPart.isValid() == true) {
-                   Inventory.updatePart(modifyPart);
-        
-               }
-               
-            Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-            Scene scene = new Scene(loader);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(scene);
-            window.show();
-             
-           } catch (ValidationException exception) {
-               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-               alert.setTitle("Error!");
-               alert.setHeaderText("Part not valid");
-               alert.setContentText(exception.getMessage());
-               alert.showAndWait();
-               }  
-        
+               try {
+                   modifyPart.isValid();
+                   if (modifyPart.isValid() == true) {
+                       Inventory.updatePart(modifyPart);
+
+                   }
+
+                Parent loader = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+                Scene scene = new Scene(loader);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(scene);
+                window.show();
+
+               } catch (ValidationException exception) {
+                   Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                   alert.setTitle("Error!");
+                   alert.setHeaderText("Part not valid");
+                   alert.setContentText(exception.getMessage());
+                   alert.showAndWait();
+                   }  
+
             }
        
     }
