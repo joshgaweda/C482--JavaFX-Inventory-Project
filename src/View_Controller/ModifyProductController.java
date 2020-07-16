@@ -83,11 +83,11 @@ public class ModifyProductController implements Initializable
     @FXML
     private TextField searchPartsBox;
     private ObservableList<Part> productParts = FXCollections.observableArrayList();
-    private final Product currentModProduct;
+    private final Product currentProductMod;
     
     public ModifyProductController() 
     {
-        this.currentModProduct = getModifiedProduct();
+        this.currentProductMod = getModifiedProduct();
     }
     
     public void populateAvailablePartsTable() 
@@ -158,9 +158,9 @@ public class ModifyProductController implements Initializable
         newProduct.setMin(Integer.parseInt(productMin));
         newProduct.setMax(Integer.parseInt(productMax));
         
-        if (currentModProduct != null) 
+        if (currentProductMod != null) 
         {
-            currentModProduct.deleteAllAssociatedParts();
+            currentProductMod.deleteAllAssociatedParts();
         }
         
         productParts.forEach((i) -> {
@@ -171,14 +171,14 @@ public class ModifyProductController implements Initializable
             newProduct.isValid();
         
         
-            if (currentModProduct == null) 
+            if (currentProductMod == null) 
             {
                 newProduct.setProductId(Inventory.getProductCount());
                 Inventory.addProduct(newProduct);
             }
             else 
             {
-                newProduct.setProductId(currentModProduct.getProductId());
+                newProduct.setProductId(currentProductMod.getProductId());
                 Inventory.updateProduct(newProduct);
             }
             
@@ -222,14 +222,14 @@ public class ModifyProductController implements Initializable
     public void initialize(URL location, ResourceBundle resources) 
     {  
         productIdBox.setDisable(true);
-        productIdBox.setText(Integer.toString(currentModProduct.getProductId()));
-        productNameBox.setText(currentModProduct.getProductName());
-        productInventoryBox.setText(Integer.toString(currentModProduct.getStock()));
-        productPriceBox.setText(Double.toString(currentModProduct.getProductPrice()));
-        productMinBox.setText(Integer.toString(currentModProduct.getMin()));
-        productMaxBox.setText(Integer.toString(currentModProduct.getMax()));
+        productIdBox.setText(Integer.toString(currentProductMod.getProductId()));
+        productNameBox.setText(currentProductMod.getProductName());
+        productInventoryBox.setText(Integer.toString(currentProductMod.getStock()));
+        productPriceBox.setText(Double.toString(currentProductMod.getProductPrice()));
+        productMinBox.setText(Integer.toString(currentProductMod.getMin()));
+        productMaxBox.setText(Integer.toString(currentProductMod.getMax()));
 
-        productParts = currentModProduct.getAllAssociatedParts();
+        productParts = currentProductMod.getAllAssociatedParts();
         
         
         addPartPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());

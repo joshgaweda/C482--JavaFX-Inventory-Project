@@ -90,9 +90,9 @@ public class MainScreenController implements Initializable
     @FXML
     private TextField productSearchBox;
    
-    private static Part currentModPart;
+    private static Part currentPartMod;
     
-    private static Product currentModProduct;
+    private static Product currentProductMod;
 
     @FXML
     void addPartMainHandler(ActionEvent event) throws IOException  {
@@ -100,7 +100,7 @@ public class MainScreenController implements Initializable
     }
     
       @FXML
-    void modPartMainHandler(ActionEvent event) throws IOException  {
+    void PartModMainHandler(ActionEvent event) throws IOException  {
         openModifyPartWindow(event);
     }
 
@@ -175,16 +175,16 @@ public class MainScreenController implements Initializable
     @FXML
     void modifyPartMainHandler(ActionEvent event) throws IOException  
     {
-        currentModPart = mainWindowPartsTable.getSelectionModel().getSelectedItem();
-        setModifyPart(currentModPart);
+        currentPartMod = mainWindowPartsTable.getSelectionModel().getSelectedItem();
+        setModifyPart(currentPartMod);
         openModifyPartWindow(event);
     }
 
     @FXML
     void mainModifyProductHandler(ActionEvent event) throws IOException  
     {
-        currentModProduct = mainWindowProductTable.getSelectionModel().getSelectedItem();
-        setModifiedProduct(currentModProduct);
+        currentProductMod = mainWindowProductTable.getSelectionModel().getSelectedItem();
+        setModifiedProduct(currentProductMod);
         openModifyProductWindow(event);
             
     }
@@ -216,7 +216,7 @@ public class MainScreenController implements Initializable
      
     public void openModifyPartWindow(ActionEvent event) throws IOException 
     {
-        if (currentModPart != null)
+        if (currentPartMod != null)
         {
             Parent loader = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
             Scene scene = new Scene(loader);
@@ -245,7 +245,7 @@ public class MainScreenController implements Initializable
      
     public void openModifyProductWindow(ActionEvent event) throws IOException 
     {
-         if (currentModProduct != null)
+         if (currentProductMod != null)
          {
               Parent loader = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
               Scene scene = new Scene(loader);
@@ -265,22 +265,22 @@ public class MainScreenController implements Initializable
     
     public static Part getModifyPart()
     {
-        return currentModPart;
+        return currentPartMod;
     }
 
     public void setModifyPart(Part modifyPart) 
     {
-        View_Controller.MainScreenController.currentModPart = modifyPart;
+        View_Controller.MainScreenController.currentPartMod = modifyPart;
     }
     
     public static Product getModifiedProduct()  
     {
-        return currentModProduct;
+        return currentProductMod;
     }
   
     public void setModifiedProduct(Product modifiedProduct) 
     {
-        MainScreenController.currentModProduct = modifiedProduct;
+        MainScreenController.currentProductMod = modifiedProduct;
     }
     
     public void refreshPartsTable()

@@ -55,7 +55,7 @@
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font></Label>
-            <Button fx:id="modPartSave" layoutX="175.0" layoutY="327.0" mnemonicParsing="false" onAction="#modPartSaveHandler" text="Save" />
+            <Button fx:id="PartModSave" layoutX="175.0" layoutY="327.0" mnemonicParsing="false" onAction="#PartModSaveHandler" text="Save" />
             <Button fx:id="partCancel" layoutX="237.0" layoutY="327.0" mnemonicParsing="false" onAction="#partCancelHandler" text="Cancel" />
             <TextField fx:id="partIdBox" editable="false" layoutX="178.0" layoutY="77.0" />
             <TextField fx:id="partNameBox" layoutX="178.0" layoutY="116.0" />

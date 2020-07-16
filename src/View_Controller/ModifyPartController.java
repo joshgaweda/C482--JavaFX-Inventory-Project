@@ -127,7 +127,7 @@ public class ModifyPartController implements Initializable
     }
   
     @FXML
-    void modPartSaveHandler(ActionEvent event) throws IOException {
+    void PartModSaveHandler(ActionEvent event) throws IOException {
         String partID    = partIdBox.getText();
         String partName  = partNameBox.getText();
         String partInv   = partInventoryBox.getText();
