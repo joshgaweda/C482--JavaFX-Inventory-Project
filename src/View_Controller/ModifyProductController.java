@@ -31,6 +31,33 @@ import javax.xml.bind.ValidationException;
 
 public class ModifyProductController implements Initializable 
 {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) 
+    {  
+        productIdBox.setDisable(true);
+        productIdBox.setText(Integer.toString(currentProductMod.getProductId()));
+        productNameBox.setText(currentProductMod.getProductName());
+        productInventoryBox.setText(Integer.toString(currentProductMod.getStock()));
+        productPriceBox.setText(Double.toString(currentProductMod.getProductPrice()));
+        productMinBox.setText(Integer.toString(currentProductMod.getMin()));
+        productMaxBox.setText(Integer.toString(currentProductMod.getMax()));
+
+        productParts = currentProductMod.getAllAssociatedParts();
+        
+        
+        addPartPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
+        addPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        addPartInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
+        addPartPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        
+        currentProductPartsContainedPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
+        currentProductPartsContainedPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        currentProductPartsContainedInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
+        currentProductPartsContainedPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+
+        populateAvailablePartsTable();
+        populateCurrentPartsTable();
+    } 
     
     @FXML
     private TextField productIdBox;
@@ -113,7 +140,7 @@ public class ModifyProductController implements Initializable
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Cancel Product Modification");
+        alert.setTitle("CANCEL PRODUCT MODIFICATION");
         alert.setHeaderText("Please confirm.");
         alert.setContentText("Please confirm you want to cancel the update to the product " + productNameBox.getText() + ".");
         Optional<ButtonType> result = alert.showAndWait();
@@ -192,7 +219,7 @@ public class ModifyProductController implements Initializable
             catch (ValidationException i) 
             {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error");
+                alert.setTitle("ERROR");
                 alert.setHeaderText("Product not valid");
                 alert.setContentText(i.getMessage());
                 alert.showAndWait();
@@ -211,39 +238,11 @@ public class ModifyProductController implements Initializable
         }
         else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
+            alert.setTitle("ERROR");
             alert.setHeaderText("Part not found.");
             alert.setContentText("The part searched for does not match any part in Inventory!");
             alert.showAndWait();
         }
     }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) 
-    {  
-        productIdBox.setDisable(true);
-        productIdBox.setText(Integer.toString(currentProductMod.getProductId()));
-        productNameBox.setText(currentProductMod.getProductName());
-        productInventoryBox.setText(Integer.toString(currentProductMod.getStock()));
-        productPriceBox.setText(Double.toString(currentProductMod.getProductPrice()));
-        productMinBox.setText(Integer.toString(currentProductMod.getMin()));
-        productMaxBox.setText(Integer.toString(currentProductMod.getMax()));
-
-        productParts = currentProductMod.getAllAssociatedParts();
-        
-        
-        addPartPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
-        addPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        addPartInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
-        addPartPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
-        
-        currentProductPartsContainedPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
-        currentProductPartsContainedPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        currentProductPartsContainedInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
-        currentProductPartsContainedPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
-
-        populateAvailablePartsTable();
-        populateCurrentPartsTable();
-    } 
 }
 

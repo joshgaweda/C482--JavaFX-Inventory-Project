@@ -134,7 +134,7 @@ public class MainScreenController implements Initializable
         if (!canDeleteProduct(product)) 
         {
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("ERROR DELETING PRODUCT");
+            alert.setTitle("ERROR!");
             alert.setHeaderText("This product cannot be removed");
             alert.setContentText("This product has parts associated with it. Please disassociate those parts and then try again.");
             alert.showAndWait();
@@ -256,7 +256,7 @@ public class MainScreenController implements Initializable
           else    
           {
               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                     alert.setTitle("NNO PRODUCT SELECTED");
+                     alert.setTitle("NO PRODUCT SELECTED");
                      alert.setHeaderText("Please select a Product to Modify");
                      alert.setContentText("Click okay to return to the main window.");
                      alert.showAndWait();
