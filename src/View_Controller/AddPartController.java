@@ -4,8 +4,6 @@ import Model.Inhouse;
 import Model.Outsourced;
 import Model.Part;
 import static Model.Inventory.addPart;
-import java.awt.event.MouseAdapter;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -32,37 +30,37 @@ public class AddPartController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        partIdField.setText("Auto Gen - Disabled");
-        partIdField.setDisable(true);
+        partIdBox.setText("Auto Gen - Disabled");
+        partIdBox.setDisable(true);
         inHousePartSelect.setSelected(true);
         outsourcedPartSelect.setSelected(false);
         isInHouse = true;
-        partSourceFieldLabel.setText("Machine ID");
+        partSourceBoxLabel.setText("Machine ID");
     } 
 
     @FXML
-    private Label partSourceFieldLabel;
+    private Label partSourceBoxLabel;
 
     @FXML
-    private TextField partIdField;
+    private TextField partIdBox;
 
     @FXML
-    private TextField partNameField;
+    private TextField partNameBox;
 
     @FXML
-    private TextField partInventoryField;
+    private TextField partInventoryBox;
 
     @FXML
-    private TextField partPriceField;
+    private TextField partPriceBox;
 
     @FXML
-    private TextField partMinField;
+    private TextField partMinBox;
 
     @FXML
-    private TextField partMaxField;
+    private TextField partMaxBox;
 
     @FXML
-    private TextField partSourceField;
+    private TextField partSourceBox;
     
     @FXML
     private RadioButton inHousePartSelect;
@@ -78,7 +76,7 @@ public class AddPartController implements Initializable
         inHousePartSelect.setSelected(true);
         outsourcedPartSelect.setSelected(false);
         isInHouse = true;
-        partSourceFieldLabel.setText("Machine ID");
+        partSourceBoxLabel.setText("Machine ID");
     }
     
     @FXML
@@ -87,7 +85,7 @@ public class AddPartController implements Initializable
         outsourcedPartSelect.setSelected(true);
         inHousePartSelect.setSelected(false);
         isInHouse = false;
-        partSourceFieldLabel.setText("Company Name");
+        partSourceBoxLabel.setText("Company Name");
     }
     
     @FXML
@@ -95,9 +93,9 @@ public class AddPartController implements Initializable
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
-        alert.setTitle("Cancel Modifcation of Part");
-        alert.setHeaderText("Confirm cancellation");
-        alert.setContentText("Please confirm that you want to cancel adding or modifying part " + partNameField.getText() + "?");
+        alert.setTitle("CANCEL PART MODIFICATION");
+        alert.setHeaderText("Confirm cancel");
+        alert.setContentText("Please confirm that you want to cancel adding or modifying " + partNameBox.getText() + "?");
         Optional<ButtonType> result = alert.showAndWait();
         
         if (result.get() == ButtonType.OK) 
@@ -113,12 +111,12 @@ public class AddPartController implements Initializable
     @FXML
     void addPartSaveHandler(ActionEvent event) throws IOException 
     {
-        String partName = partNameField.getText();
-        String partInv = partInventoryField.getText();
-        String partPrice = partPriceField.getText();
-        String partMin = partMinField.getText();
-        String partMax = partMaxField.getText();
-        String partSource = partSourceField.getText();
+        String partName = partNameBox.getText();
+        String partInv = partInventoryBox.getText();
+        String partPrice = partPriceBox.getText();
+        String partMin = partMinBox.getText();
+        String partMax = partMaxBox.getText();
+        String partSource = partSourceBox.getText();
         
         int newPartID = 1;
         for(Part i: Model.Inventory.getPartInventory()) 
@@ -163,8 +161,8 @@ public class AddPartController implements Initializable
                  catch (ValidationException e) 
                  {
                      Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                     alert.setTitle("Error Validating Part!");
-                     alert.setHeaderText("Part not valid");
+                     alert.setTitle("ERROR!");
+                     alert.setHeaderText("Invalid Part");
                      alert.setContentText(e.getMessage());
                      alert.showAndWait();
                  }  
@@ -197,8 +195,8 @@ public class AddPartController implements Initializable
                 catch (ValidationException exception) 
                 {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Error Validating Part!");
-                    alert.setHeaderText("Part not valid");
+                    alert.setTitle("ERROR!");
+                    alert.setHeaderText("Invalid Part");
                     alert.setContentText(exception.getMessage());
                     alert.showAndWait();
                  }  
