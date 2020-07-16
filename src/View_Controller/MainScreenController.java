@@ -43,49 +43,49 @@ public class MainScreenController implements Initializable
         refreshPartsTable();
         refreshProductsTable();  
         
-        mainPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
-        mainPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        mainPartInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
-        mainPartPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
+        mainWindowPartIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPartId()).asObject());
+        mainWindowPartNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        mainWindowPartInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getInStock()).asObject());
+        mainWindowPartPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
         
-        mainProductIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getProductId()).asObject());
-        mainProductNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProductName()));
-        mainProductInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
-        mainProductPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getProductPrice()).asObject()); 
+        mainWindowProductIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getProductId()).asObject());
+        mainWindowProductNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProductName()));
+        mainWindowProductInventoryColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getStock()).asObject());
+        mainWindowProductPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getProductPrice()).asObject()); 
     }        
     
     @FXML
-    private TableView<Part> mainPartsTable;
+    private TableView<Part> mainWindowPartsTable;
 
     @FXML
-    private TableColumn<Part, Integer> mainPartIDColumn;
+    private TableColumn<Part, Integer> mainWindowPartIDColumn;
 
     @FXML
-    private TableColumn<Part, String> mainPartNameColumn;
+    private TableColumn<Part, String> mainWindowPartNameColumn;
 
     @FXML
-    private TableColumn<Part, Integer> mainPartInventoryColumn;
+    private TableColumn<Part, Integer> mainWindowPartInventoryColumn;
 
     @FXML
-    private TableColumn<Part, Double> mainPartPriceColumn;
+    private TableColumn<Part, Double> mainWindowPartPriceColumn;
 
     @FXML
     private TextField partsSearchBox;
 
     @FXML
-    private TableView<Product> mainProductTable;
+    private TableView<Product> mainWindowProductTable;
 
     @FXML
-    private TableColumn<Product, Integer> mainProductIDColumn;
+    private TableColumn<Product, Integer> mainWindowProductIDColumn;
 
     @FXML
-    private TableColumn<Product, String> mainProductNameColumn;
+    private TableColumn<Product, String> mainWindowProductNameColumn;
 
     @FXML
-    private TableColumn<Product, Integer> mainProductInventoryColumn;
+    private TableColumn<Product, Integer> mainWindowProductInventoryColumn;
 
     @FXML
-    private TableColumn<Product, Double> mainProductPriceColumn;
+    private TableColumn<Product, Double> mainWindowProductPriceColumn;
 
     @FXML
     private TextField productSearchBox;
@@ -112,7 +112,7 @@ public class MainScreenController implements Initializable
     @FXML
     void deletePartHandler(ActionEvent event) throws IOException  
     {
-        Part part = mainPartsTable.getSelectionModel().getSelectedItem();
+        Part part = mainWindowPartsTable.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
@@ -130,7 +130,7 @@ public class MainScreenController implements Initializable
     @FXML
     void deleteProductHandler(ActionEvent event) throws IOException  
     {
-        Product product = mainProductTable.getSelectionModel().getSelectedItem();
+        Product product = mainWindowProductTable.getSelectionModel().getSelectedItem();
         if (!canDeleteProduct(product)) 
         {
             Alert alert = new Alert(AlertType.INFORMATION);
@@ -175,7 +175,7 @@ public class MainScreenController implements Initializable
     @FXML
     void modifyPartMainHandler(ActionEvent event) throws IOException  
     {
-        currentModPart = mainPartsTable.getSelectionModel().getSelectedItem();
+        currentModPart = mainWindowPartsTable.getSelectionModel().getSelectedItem();
         setModifyPart(currentModPart);
         openModifyPartWindow(event);
     }
@@ -183,7 +183,7 @@ public class MainScreenController implements Initializable
     @FXML
     void mainModifyProductHandler(ActionEvent event) throws IOException  
     {
-        currentModProduct = mainProductTable.getSelectionModel().getSelectedItem();
+        currentModProduct = mainWindowProductTable.getSelectionModel().getSelectedItem();
         setModifiedProduct(currentModProduct);
         openModifyProductWindow(event);
             
@@ -193,7 +193,7 @@ public class MainScreenController implements Initializable
     void searchPartsHandler(ActionEvent event) throws IOException  
     {
         Model.Inventory.getPartInventory().stream().filter((i) -> (i.getName().equalsIgnoreCase(partsSearchBox.getText()))).forEachOrdered((i) -> {
-            mainPartsTable.getSelectionModel().select(i);
+            mainWindowPartsTable.getSelectionModel().select(i);
         });
     }
 
@@ -201,7 +201,7 @@ public class MainScreenController implements Initializable
     void searchProductsHandler(ActionEvent event) throws IOException 
     {
         Model.Inventory.getAllProducts().stream().filter((i) -> (i.getProductName().equalsIgnoreCase(productSearchBox.getText()))).forEachOrdered((i) -> {
-            mainProductTable.getSelectionModel().select(i);
+            mainWindowProductTable.getSelectionModel().select(i);
         });
     }
         
@@ -256,9 +256,9 @@ public class MainScreenController implements Initializable
           else    
           {
               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                     alert.setTitle("No product selected");
+                     alert.setTitle("NNO PRODUCT SELECTED");
                      alert.setHeaderText("Please select a Product to Modify");
-                     alert.setContentText("Click okay to return to main window.");
+                     alert.setContentText("Click okay to return to the main window.");
                      alert.showAndWait();
           }  
      }
@@ -285,12 +285,12 @@ public class MainScreenController implements Initializable
     
     public void refreshPartsTable()
     {
-        mainPartsTable.setItems(getPartInventory());
+        mainWindowPartsTable.setItems(getPartInventory());
     }
    
     public void refreshProductsTable()
     {
-        mainProductTable.setItems(getAllProducts());
+        mainWindowProductTable.setItems(getAllProducts());
     }
     
     public void setApp(Main mainApp)

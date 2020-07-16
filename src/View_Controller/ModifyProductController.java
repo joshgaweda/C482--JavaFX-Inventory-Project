@@ -163,10 +163,9 @@ public class ModifyProductController implements Initializable
             currentModProduct.deleteAllAssociatedParts();
         }
         
-        for (Part i: productParts) 
-        {
+        productParts.forEach((i) -> {
             newProduct.addAssociatedParts(i);
-        }
+        });
         
         try {
             newProduct.isValid();
